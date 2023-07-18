@@ -184,7 +184,7 @@ namespace serializer{
         /// pointer if the object has not been received or was corrupted in transit.
         bool deserialize(uint8_t incoming_byte, T *destination_object = nullptr){
             enum ParseStage { stage_prefix, stage_id, stage_object, stage_suffix, stage_checksum, stage_checksum_2 };
-            static ParseStage stage = stage_prefix;
+            static ParseStage stage = (incoming_byte == prefix) ? stage_id : stage_prefix;
             static uint8_t * ptr; // for writing to the object
 
             // Serialization is done in five stages:
@@ -211,7 +211,7 @@ namespace serializer{
                         ptr = (uint8_t *) &object;              //    Reset the pointer
                     }               
                     else{                                       // If it doesn't match
-                        stage = stage_prefix;                   //    Go back to the first stage. This isn't the packet we're looking for.
+                        stage = (incoming_byte == prefix) ? stage_id : stage_prefix;                   //    Go back to the first stage. This isn't the packet we're looking for.
                     }               
                     break;               
                 case stage_object:                              // We expect the object data itself
@@ -235,7 +235,7 @@ namespace serializer{
                     break;
                 case stage_checksum_2:                          // We expect the most significant byte of the checksum
                     checksum += incoming_byte<<8;               //    Store it
-                    stage = stage_prefix;                       //    Go back to the first stage
+                    stage = (incoming_byte == prefix) ? stage_id : stage_prefix;                       //    Go back to the first stage
                     if(checksum == compute_checksum(object)){   //    If the checksum matches           
                         if(destination_object){                 //        If we have a valid pointer to an object
                             *destination_object = object;       //            Write the object to the given address

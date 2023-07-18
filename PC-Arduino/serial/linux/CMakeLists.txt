@@ -60,10 +60,10 @@ message("${BoldYellow}Library search complete!${ColorReset}")
 
 
 set(PROJECT_SOURCES
-    src/messages.hpp
+    src/shared/messages.hpp
     src/main.cpp
-    src/TinySerializer.hpp
-    src/TinySerializer.cpp
+    src/shared/TinySerializer.cpp
+    src/shared/TinySerializer.hpp
 )
 add_executable (${PROJECT_NAME} ${PROJECT_SOURCES})
 target_link_libraries(${PROJECT_NAME} serial)
