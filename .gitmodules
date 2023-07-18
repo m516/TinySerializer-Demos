@@ -1,0 +1,3 @@
+[submodule "PC-Arduino/serial/pc/thirdparty/serial"]
+	path = PC-Arduino/serial/pc/thirdparty/serial
+	url = https://github.com/wjwwood/serial.git
