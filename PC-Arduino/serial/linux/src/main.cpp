@@ -10,7 +10,7 @@ namespace connection{
     serial::Serial my_serial("/dev/ttyACM0", 9600, serial::Timeout::simpleTimeout(100000));
     void write_byte(uint8_t byte){
         my_serial.write(&byte, 1);
-        std::cout << "Wrote byte: " << (int)byte << std::endl;
+        // std::cout << "Wrote byte: " << (int)byte << std::endl;
     }
     void wait_until_awake(){
         // Let the Arduino wake up
@@ -38,7 +38,7 @@ void test_message_1(){
 
     // Set the request payload
     request_1.i = 42;
-    std::cout << "Sending request: " << std::endl
+    std::cout << "Sending request 1 (uint16_t): " << std::endl
               << "  i:             " << request_1.i << std::endl;
     
     // Send the request
@@ -48,7 +48,7 @@ void test_message_1(){
     uint8_t incoming_byte;
     do {
         my_serial.read(&incoming_byte, 1);
-        std::cout << "Read byte: " << (int)incoming_byte << std::endl;
+        // std::cout << "Read byte: " << (int)incoming_byte << std::endl;
     }
     while(!deserializer_1.deserialize(incoming_byte, &response_1));
 
@@ -73,8 +73,8 @@ void test_message_2(){
     serializer::Deserializer<message_2_response_t> deserializer_2(2);
 
     // Set the request payload
-    request_2.i = 42;
-    std::cout << "Sending request: " << std::endl
+    request_2.i = 3.14;
+    std::cout << "Sending request 2 (float): " << std::endl
               << "  i:             " << request_2.i << std::endl;
     
     // Send the request

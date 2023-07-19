@@ -56,8 +56,8 @@ void respond_to_message_2(uint8_t incoming_data){
 
   // Do some math on it and return the result
   response_2.i              = request_2.i;
-  response_2.i_plus_one     = request_2.i +  2;
-  response_2.i_minus_one    = request_2.i -  2;
+  response_2.i_plus_one     = request_2.i +  1;
+  response_2.i_minus_one    = request_2.i -  1;
   response_2.i_times_two    = request_2.i *  2;
   response_2.i_over_two     = request_2.i /  2;
 
